@@ -209,8 +209,7 @@ class AppShell private constructor(
             if (additionalEnvironment != null)
                 environment.putAll(additionalEnvironment)
             val environmentList = ShellEnvironmentUtils.convertEnvironmentToEnviron(environment)
-            environmentList.sort()
-            val environmentArray = environmentList.toTypedArray()
+            val environmentArray = environmentList.sorted().toTypedArray()
 
             if (!executionCommand.setState(ExecutionState.EXECUTING)) {
                 executionCommand.setStateFailed(Errno.ERRNO_FAILED.code, currentPackageContext.getString(R.string.error_failed_to_execute_app_shell_command, executionCommand.getCommandIdAndLabelLogString()))
