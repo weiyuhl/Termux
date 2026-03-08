@@ -488,18 +488,18 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 
 2. **进程创建（Native）**
    - `terminal-emulator/src/main/jni/termux.c` (Native C) ⭐⭐⭐⭐⭐
-   - ~~`terminal-emulator/src/main/java/com/termux/terminal/JNI.java`~~ → `JNI.kt` ✅ ⭐⭐⭐⭐
+   - ~~`terminal-emulator/src/main/java/com/termux/terminal/JNI.java`~~ → `terminal-emulator/src/main/java/com/termux/terminal/JNI.kt` ✅ ⭐⭐⭐⭐
 
 3. **命令执行**
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/runner/app/AppShell.java`~~ → `AppShell.kt` ✅ ⭐⭐⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/termux/shell/command/runner/terminal/TermuxSession.java`~~ → `TermuxSession.kt` ✅ ⭐⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/ExecutionCommand.java`~~ → `ExecutionCommand.kt` ✅ ⭐⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/runner/app/AppShell.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/runner/app/AppShell.kt` ✅ ⭐⭐⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/termux/shell/command/runner/terminal/TermuxSession.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/shell/command/runner/terminal/TermuxSession.kt` ✅ ⭐⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/ExecutionCommand.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/ExecutionCommand.kt` ✅ ⭐⭐⭐⭐
 
 4. **环境配置**
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/UnixShellEnvironment.java`~~ → `UnixShellEnvironment.kt` ✅ ⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellEnvironmentUtils.java`~~ → `ShellEnvironmentUtils.kt` ✅ ⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/AndroidShellEnvironment.java`~~ → `AndroidShellEnvironment.kt` ✅ ⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellCommandShellEnvironment.java`~~ → `ShellCommandShellEnvironment.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/UnixShellEnvironment.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/environment/UnixShellEnvironment.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellEnvironmentUtils.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellEnvironmentUtils.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/AndroidShellEnvironment.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/environment/AndroidShellEnvironment.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellCommandShellEnvironment.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellCommandShellEnvironment.kt` ✅ ⭐⭐⭐
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellEnvironment.java` ❌ **待重构** ⭐⭐⭐⭐
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAppShellEnvironment.java` ❌ **待重构** ⭐⭐⭐
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAPIShellEnvironment.java` ❌ **待重构** ⭐⭐
@@ -507,19 +507,19 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 
 5. **服务管理**
    - `app/src/main/java/com/termux/app/TermuxService.java` ❌ **保持 Java**（重构后终端文字消失） ⭐⭐⭐⭐
-   - ~~`app/src/main/java/com/termux/app/RunCommandService.java`~~ → `RunCommandService.kt` ✅ ⭐⭐⭐
+   - ~~`app/src/main/java/com/termux/app/RunCommandService.java`~~ → `app/src/main/java/com/termux/app/RunCommandService.kt` ✅ ⭐⭐⭐
 
 6. **工具类**
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.java` ❌ **待重构** ⭐⭐⭐⭐
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellUtils.java` ❌ **待重构** ⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.java`~~ → `ShellUtils.kt` ✅ ⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.java`~~ → `StreamGobbler.kt` ✅ ⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.java`~~ → `ArgumentTokenizer.kt` ✅ ⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.kt` ✅ ⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.kt` ✅ ⭐⭐
 
 7. **配置和常量**
-   - ~~`termux-shared/src/main/java/com/termux/shared/termux/TermuxBootstrap.java`~~ → `TermuxBootstrap.kt` ✅ ⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/termux/TermuxConstants.java`~~ → `TermuxConstants.kt` ✅ ⭐⭐⭐
-   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/ShellCommandConstants.java`~~ → `ShellCommandConstants.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/termux/TermuxBootstrap.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/TermuxBootstrap.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/termux/TermuxConstants.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/TermuxConstants.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/ShellCommandConstants.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/ShellCommandConstants.kt` ✅ ⭐⭐⭐
 
 ### 重构统计
 
