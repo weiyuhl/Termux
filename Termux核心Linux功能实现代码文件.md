@@ -273,9 +273,71 @@ static int create_subprocess(JNIEnv* env,
 - 为 Shell 命令执行设置特定的环境变量
 - 配置 Termux 特有的环境（$PREFIX, $HOME 等）
 
+### 5. Termux Shell 环境
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellEnvironment.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- Termux 主环境类，继承自 AndroidShellEnvironment
+- 设置 PREFIX 环境变量指向 Termux 安装目录
+- 设置 HOME 指向 Termux 用户目录
+- 根据 Android 版本配置 PATH 和 LD_LIBRARY_PATH
+- 支持 failsafe 模式
+- 写入环境变量到 termux.env 文件
+
+### 6. Termux App Shell 环境
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAppShellEnvironment.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- 为 Termux 主应用设置特定的环境变量
+- 提供应用级别的环境配置
+
+### 7. Termux API Shell 环境
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAPIShellEnvironment.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- 为 Termux:API 应用设置特定的环境变量
+- 提供 API 相关的环境配置
+
+### 8. Termux Shell 命令环境
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellCommandShellEnvironment.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- 继承自 ShellCommandShellEnvironment
+- 为 Termux 命令执行提供特定的环境变量
+- 设置命令执行相关的环境信息
+
 ## 五、Shell 工具类
 
-### 1. Shell 工具
+### 1. Termux Shell 管理器
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- 管理所有 TermuxSession 列表（前台终端会话）
+- 管理所有 AppShell 列表（后台任务）
+- 管理待处理的插件执行命令列表
+- 提供 Shell ID 生成器
+- 跟踪应用启动后的 Shell 数量统计
+- 处理系统启动完成事件
+- 处理应用退出事件
+
+**说明**: 这是 Termux Shell 会话和任务的中央管理器，被 TermuxService 使用。
+
+### 2. Termux Shell 工具
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellUtils.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- 设置 Termux Shell 命令参数
+- 处理登录 Shell 的特殊参数（-l 或 -）
+- 清理 TERMUX_TMP_DIR 临时目录
+- 提供 Termux 特定的 Shell 工具函数
+
+### 3. Shell 工具
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.java`  
 **Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.kt` ✅
 
@@ -301,7 +363,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 - 获取可执行文件的 basename
 - 获取终端会话的文本内容
 
-### 2. 参数解析器
+### 4. 参数解析器
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.java`  
 **Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.kt` ✅
 
@@ -310,7 +372,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 - 处理引号、转义字符
 - 将命令字符串分割为参数数组
 
-### 3. 流读取器
+### 5. 流读取器
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.java`  
 **Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.kt` ✅
 
@@ -437,12 +499,18 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellEnvironmentUtils.java`~~ → `ShellEnvironmentUtils.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/AndroidShellEnvironment.java`~~ → `AndroidShellEnvironment.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/environment/ShellCommandShellEnvironment.java`~~ → `ShellCommandShellEnvironment.kt` ✅ ⭐⭐⭐
+   - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellEnvironment.java` ❌ **待重构** ⭐⭐⭐⭐
+   - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAppShellEnvironment.java` ❌ **待重构** ⭐⭐⭐
+   - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAPIShellEnvironment.java` ❌ **待重构** ⭐⭐
+   - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellCommandShellEnvironment.java` ❌ **待重构** ⭐⭐⭐
 
 5. **服务管理**
    - `app/src/main/java/com/termux/app/TermuxService.java` ❌ **保持 Java**（重构后终端文字消失） ⭐⭐⭐⭐
    - ~~`app/src/main/java/com/termux/app/RunCommandService.java`~~ → `RunCommandService.kt` ✅ ⭐⭐⭐
 
 6. **工具类**
+   - `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.java` ❌ **待重构** ⭐⭐⭐⭐
+   - `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellUtils.java` ❌ **待重构** ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.java`~~ → `ShellUtils.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.java`~~ → `StreamGobbler.kt` ✅ ⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.java`~~ → `ArgumentTokenizer.kt` ✅ ⭐⭐
@@ -454,11 +522,12 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 
 ### 重构统计
 
-- **总文件数**: 19 个核心文件
+- **总文件数**: 25 个核心文件
 - **已重构为 Kotlin**: 16 个 ✅
+- **待重构**: 6 个 ❌ (TermuxShellEnvironment, TermuxAppShellEnvironment, TermuxAPIShellEnvironment, TermuxShellCommandShellEnvironment, TermuxShellManager, TermuxShellUtils)
 - **保持 Java**: 1 个 ❌ (TermuxService.java - 重构后会导致终端文字消失)
 - **Native/汇编代码**: 2 个 (不需要重构)
-- **重构完成度**: 94.1% (16/17 个 Java 文件)
+- **重构完成度**: 69.6% (16/23 个 Java 文件)
 
 ---
 
