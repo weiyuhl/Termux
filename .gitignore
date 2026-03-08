@@ -1,0 +1,45 @@
+# From https://gist.github.com/iainconnor/8605514
+# with the addition of the /captures below.
+/captures
+
+# Built application files
+build/
+release/
+*.apk
+*.so
+.externalNativeBuild
+.cxx
+
+# Bootstrap files - 保留本地 Bootstrap 文件
+# *.zip
+# 排除 Bootstrap文件 目录中的 zip 文件
+!Bootstrap文件/*.zip
+# 排除 app/src/main/cpp 目录中的 bootstrap zip 文件
+!app/src/main/cpp/bootstrap-*.zip
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Gradle generated files
+.gradle/
+
+# Signing files
+.signing/
+
+# Intellij
+.idea/
+*.iml
+
+# Vim
+*.swo
+*.swp
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.swp
+ehthumbs.db
+Thumbs.db

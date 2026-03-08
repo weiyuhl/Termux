@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.13.2"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        // 本地 Maven 仓库（优先使用）
+        maven { url uri("$rootDir/本地Maven仓库") }
+        // 备用：在线仓库
+        maven { url "https://jitpack.io" }
+    }
+}

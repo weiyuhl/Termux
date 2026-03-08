@@ -1,0 +1,51 @@
+{
+  "formatVersion" : "1.1",
+  "createdBy" : {
+    "gradle" : {
+      "version" : "7.2"
+    }
+  },
+  "component" : {
+    "group" : "com.termux",
+    "module" : "termux-am-library",
+    "version" : "v2.0.0",
+    "attributes" : {
+      "org.gradle.status" : "release"
+    }
+  },
+  "variants" : [ {
+    "name" : "releaseApiPublication",
+    "attributes" : {
+      "org.gradle.category" : "library",
+      "org.gradle.dependency.bundling" : "external",
+      "org.gradle.libraryelements" : "aar",
+      "org.gradle.usage" : "java-api"
+    },
+    "files" : [ {
+      "name" : "termux-am-library-v2.0.0.aar",
+      "url" : "termux-am-library-v2.0.0.aar",
+      "size" : 16687,
+      "sha512" : "acbeb7ea82710ead190323caacd503749affad0970c858e7365830212fac8497238dc43c77c2c86b3ec5690d838822267e79ef7f928c3066a3d9b4256c74771d",
+      "sha256" : "09128a409bd4d9a95807d53e17e070ca9d1c98c1694ac4297cb61961657aad91",
+      "sha1" : "0392c758709ff94f616c6353be02de93ef0b3294",
+      "md5" : "4a3f8c3d2ca0169dab021ff76a338cb0"
+    } ]
+  }, {
+    "name" : "releaseRuntimePublication",
+    "attributes" : {
+      "org.gradle.category" : "library",
+      "org.gradle.dependency.bundling" : "external",
+      "org.gradle.libraryelements" : "aar",
+      "org.gradle.usage" : "java-runtime"
+    },
+    "files" : [ {
+      "name" : "termux-am-library-v2.0.0.aar",
+      "url" : "termux-am-library-v2.0.0.aar",
+      "size" : 16687,
+      "sha512" : "acbeb7ea82710ead190323caacd503749affad0970c858e7365830212fac8497238dc43c77c2c86b3ec5690d838822267e79ef7f928c3066a3d9b4256c74771d",
+      "sha256" : "09128a409bd4d9a95807d53e17e070ca9d1c98c1694ac4297cb61961657aad91",
+      "sha1" : "0392c758709ff94f616c6353be02de93ef0b3294",
+      "md5" : "4a3f8c3d2ca0169dab021ff76a338cb0"
+    } ]
+  } ]
+}
