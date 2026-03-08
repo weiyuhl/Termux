@@ -127,7 +127,8 @@ TerminalSession terminalSession = new TerminalSession(
 ## 三、Linux 子进程创建（Native 实现）
 
 ### 1. JNI 接口定义
-**文件**: `terminal-emulator/src/main/java/com/termux/terminal/JNI.java`
+**原始文件**: `terminal-emulator/src/main/java/com/termux/terminal/JNI.java`  
+**Kotlin 版本**: `terminal-emulator/src/main/java/com/termux/terminal/JNI.kt` ✅
 
 **核心功能**:
 ```java
@@ -487,7 +488,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 
 2. **进程创建（Native）**
    - `terminal-emulator/src/main/jni/termux.c` (Native C) ⭐⭐⭐⭐⭐
-   - `terminal-emulator/src/main/java/com/termux/terminal/JNI.java` (保持 Java) ⭐⭐⭐⭐
+   - ~~`terminal-emulator/src/main/java/com/termux/terminal/JNI.java`~~ → `JNI.kt` ✅ ⭐⭐⭐⭐
 
 3. **命令执行**
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/runner/app/AppShell.java`~~ → `AppShell.kt` ✅ ⭐⭐⭐⭐⭐
@@ -523,11 +524,11 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 ### 重构统计
 
 - **总文件数**: 25 个核心文件
-- **已重构为 Kotlin**: 16 个 ✅
+- **已重构为 Kotlin**: 17 个 ✅
 - **待重构**: 6 个 ❌ (TermuxShellEnvironment, TermuxAppShellEnvironment, TermuxAPIShellEnvironment, TermuxShellCommandShellEnvironment, TermuxShellManager, TermuxShellUtils)
 - **保持 Java**: 1 个 ❌ (TermuxService.java - 重构后会导致终端文字消失)
 - **Native/汇编代码**: 2 个 (不需要重构)
-- **重构完成度**: 69.6% (16/23 个 Java 文件)
+- **重构完成度**: 73.9% (17/23 个 Java 文件)
 
 ---
 
