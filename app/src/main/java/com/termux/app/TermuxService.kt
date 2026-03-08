@@ -655,7 +655,7 @@ class TermuxService : Service(), AppShell.AppShellClient, TermuxSession.TermuxSe
         // Otherwise if command was manually started by the user like by adding a new terminal session
         // then no need to set stdout
         val newTermuxSession = TermuxSession.execute(
-            this, executionCommand, termuxTerminalSessionClient,
+            this, executionCommand, getTermuxTerminalSessionClient(),
             this, TermuxShellEnvironment(), null, executionCommand.isPluginExecutionCommand
         )
         
@@ -761,7 +761,7 @@ class TermuxService : Service(), AppShell.AppShellClient, TermuxSession.TermuxSe
                 startTermuxActivity()
             }
             TERMUX_SERVICE.VALUE_EXTRA_SESSION_ACTION_KEEP_CURRENT_SESSION_AND_OPEN_ACTIVITY -> {
-                if (termuxSessionsSize == 1)
+                if (getTermuxSessionsSize() == 1)
                     setCurrentStoredTerminalSession(newTerminalSession)
                 startTermuxActivity()
             }
@@ -771,7 +771,7 @@ class TermuxService : Service(), AppShell.AppShellClient, TermuxSession.TermuxSe
                     mTermuxTerminalSessionActivityClient!!.setCurrentSession(newTerminalSession)
             }
             TERMUX_SERVICE.VALUE_EXTRA_SESSION_ACTION_KEEP_CURRENT_SESSION_AND_DONT_OPEN_ACTIVITY -> {
-                if (termuxSessionsSize == 1)
+                if (getTermuxSessionsSize() == 1)
                     setCurrentStoredTerminalSession(newTerminalSession)
             }
             else -> {
@@ -807,9 +807,13 @@ class TermuxService : Service(), AppShell.AppShellClient, TermuxSession.TermuxSe
      * @return Returns the [TermuxTerminalSessionActivityClient] if [TermuxActivity] has bound with
      * [TermuxService], otherwise [TermuxTerminalSessionServiceClient].
      */
-    @get:Synchronized
-    val termuxTerminalSessionClient: TermuxTerminalSessionClientBase
-        get() = mTermuxTerminalSessionActivityClient ?: mTermuxTerminalSessionServiceClient
+    @Synchronized
+    fun getTermuxTerminalSessionClient(): TermuxTerminalSessionClientBase {
+        return if (mTermuxTerminalSessionActivityClient != null)
+            mTermuxTerminalSessionActivityClient!!
+        else
+            mTermuxTerminalSessionServiceClient
+    }
 
     /**
      * This should be called when [TermuxActivity.onServiceConnected] is called to set the
@@ -849,7 +853,7 @@ class TermuxService : Service(), AppShell.AppShellClient, TermuxSession.TermuxSe
         val contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
 
         // Set notification text
-        val sessionCount = termuxSessionsSize
+        val sessionCount = getTermuxSessionsSize()
         val taskCount = mShellManager.mTermuxTasks.size
         var notificationText = "$sessionCount session" + if (sessionCount == 1) "" else "s"
         if (taskCount > 0) {
@@ -934,17 +938,20 @@ class TermuxService : Service(), AppShell.AppShellClient, TermuxSession.TermuxSe
         preferences.setCurrentSession(terminalSession.mHandle)
     }
 
-    @get:Synchronized
-    val isTermuxSessionsEmpty: Boolean
-        get() = mShellManager.mTermuxSessions.isEmpty()
+    @Synchronized
+    fun isTermuxSessionsEmpty(): Boolean {
+        return mShellManager.mTermuxSessions.isEmpty()
+    }
 
-    @get:Synchronized
-    val termuxSessionsSize: Int
-        get() = mShellManager.mTermuxSessions.size
+    @Synchronized
+    fun getTermuxSessionsSize(): Int {
+        return mShellManager.mTermuxSessions.size
+    }
 
-    @get:Synchronized
-    val termuxSessions: List<TermuxSession>
-        get() = mShellManager.mTermuxSessions
+    @Synchronized
+    fun getTermuxSessions(): List<TermuxSession> {
+        return mShellManager.mTermuxSessions
+    }
 
     @Synchronized
     fun getTermuxSession(index: Int): TermuxSession? {
@@ -966,9 +973,10 @@ class TermuxService : Service(), AppShell.AppShellClient, TermuxSession.TermuxSe
         return null
     }
 
-    @get:Synchronized
-    val lastTermuxSession: TermuxSession?
-        get() = if (mShellManager.mTermuxSessions.isEmpty()) null else mShellManager.mTermuxSessions[mShellManager.mTermuxSessions.size - 1]
+    @Synchronized
+    fun getLastTermuxSession(): TermuxSession? {
+        return if (mShellManager.mTermuxSessions.isEmpty()) null else mShellManager.mTermuxSessions[mShellManager.mTermuxSessions.size - 1]
+    }
 
     @Synchronized
     fun getIndexOfSession(terminalSession: TerminalSession?): Int {
