@@ -25,6 +25,10 @@ local.properties
 
 # Signing files
 .signing/
+# 排除发布签名密钥（敏感信息）
+app/termux-release.jks
+# 保留测试签名密钥
+!app/testkey_untrusted.jks
 
 # Intellij
 .idea/
