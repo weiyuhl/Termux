@@ -120,6 +120,14 @@ android {
         jvmTarget = '1.8'
     }
 
+    sourceSets {
+        main {
+            java {
+                exclude '**/TermuxService.java'
+            }
+        }
+    }
+
     externalNativeBuild {
         ndkBuild {
             path "src/main/cpp/Android.mk"
