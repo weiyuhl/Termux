@@ -315,7 +315,7 @@ static int create_subprocess(JNIEnv* env,
 
 ### 1. Termux Shell 管理器
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.java`  
-**Kotlin 版本**: ❌ **待重构**
+**Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.kt` ✅
 
 **核心功能**:
 - 管理所有 TermuxSession 列表（前台终端会话）
@@ -510,7 +510,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
    - ~~`app/src/main/java/com/termux/app/RunCommandService.java`~~ → `app/src/main/java/com/termux/app/RunCommandService.kt` ✅ ⭐⭐⭐
 
 6. **工具类**
-   - `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.java` ❌ **待重构** ⭐⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.kt` ✅ ⭐⭐⭐⭐
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellUtils.java` ❌ **待重构** ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.kt` ✅ ⭐⭐
@@ -524,11 +524,11 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 ### 重构统计
 
 - **总文件数**: 25 个核心文件
-- **已重构为 Kotlin**: 18 个 ✅
-- **待重构**: 5 个 ❌ (TermuxShellEnvironment, TermuxAppShellEnvironment, TermuxAPIShellEnvironment, TermuxShellManager, TermuxShellUtils)
+- **已重构为 Kotlin**: 19 个 ✅
+- **待重构**: 4 个 ❌ (TermuxShellEnvironment, TermuxAppShellEnvironment, TermuxAPIShellEnvironment, TermuxShellUtils)
 - **保持 Java**: 1 个 ❌ (TermuxService.java - 重构后会导致终端文字消失)
 - **Native/汇编代码**: 2 个 (不需要重构)
-- **重构完成度**: 78.3% (18/23 个 Java 文件)
+- **重构完成度**: 82.6% (19/23 个 Java 文件)
 
 ---
 
