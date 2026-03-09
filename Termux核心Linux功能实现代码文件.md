@@ -304,7 +304,7 @@ static int create_subprocess(JNIEnv* env,
 
 ### 8. Termux Shell 命令环境
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellCommandShellEnvironment.java`  
-**Kotlin 版本**: ❌ **待重构**
+**Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellCommandShellEnvironment.kt` ✅
 
 **核心功能**:
 - 继承自 ShellCommandShellEnvironment
@@ -503,7 +503,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellEnvironment.java` ❌ **待重构** ⭐⭐⭐⭐
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAppShellEnvironment.java` ❌ **待重构** ⭐⭐⭐
    - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxAPIShellEnvironment.java` ❌ **待重构** ⭐⭐
-   - `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellCommandShellEnvironment.java` ❌ **待重构** ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellCommandShellEnvironment.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/shell/command/environment/TermuxShellCommandShellEnvironment.kt` ✅ ⭐⭐⭐
 
 5. **服务管理**
    - `app/src/main/java/com/termux/app/TermuxService.java` ❌ **保持 Java**（重构后终端文字消失） ⭐⭐⭐⭐
@@ -524,11 +524,11 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 ### 重构统计
 
 - **总文件数**: 25 个核心文件
-- **已重构为 Kotlin**: 17 个 ✅
-- **待重构**: 6 个 ❌ (TermuxShellEnvironment, TermuxAppShellEnvironment, TermuxAPIShellEnvironment, TermuxShellCommandShellEnvironment, TermuxShellManager, TermuxShellUtils)
+- **已重构为 Kotlin**: 18 个 ✅
+- **待重构**: 5 个 ❌ (TermuxShellEnvironment, TermuxAppShellEnvironment, TermuxAPIShellEnvironment, TermuxShellManager, TermuxShellUtils)
 - **保持 Java**: 1 个 ❌ (TermuxService.java - 重构后会导致终端文字消失)
 - **Native/汇编代码**: 2 个 (不需要重构)
-- **重构完成度**: 73.9% (17/23 个 Java 文件)
+- **重构完成度**: 78.3% (18/23 个 Java 文件)
 
 ---
 
