@@ -382,7 +382,44 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 - 将输出存储到 StringBuilder
 - 支持日志输出
 
-## 六、Termux 服务管理
+### 6. 命令结果数据
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/shell/command/result/ResultData.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- 存储命令执行结果（stdout, stderr, exitCode）
+- 提供结果数据的操作接口
+- 管理命令执行的错误列表
+
+## 六、AM Socket Server（Activity Manager 命令服务）
+
+### 1. AM Socket Server 基类
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/shell/am/AmSocketServer.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- 提供 Unix Domain Socket 服务器
+- 接收 Android Activity Manager (am) 命令
+- 使用 termux-am-library 执行 am 命令
+- 返回执行结果（exit_code, stdout, stderr）
+
+**说明**: 允许通过 Socket 执行 am 命令，比传统的 /system/bin/am 更快，因为不需要每次都启动 dalvik vm。
+
+### 2. Termux AM Socket Server
+**原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/am/TermuxAmSocketServer.java`  
+**Kotlin 版本**: ❌ **待重构**
+
+**核心功能**:
+- AmSocketServer 的 Termux 包装器
+- 使用文件系统 Socket（$PREFIX/var/run/termux-am.sock）
+- 只允许 termux 用户和 root 用户连接
+- 提供 $PREFIX/bin/termux-am 客户端支持
+
+**说明**: 提供类似 $PREFIX/bin/am 的功能，但性能更好。
+
+## 七、Termux 服务管理
+
+## 七、Termux 服务管理
 
 ### 1. Termux 主服务
 **原始文件**: `app/src/main/java/com/termux/app/TermuxService.java`  
@@ -414,7 +451,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 - 执行后台脚本
 - 返回执行结果
 
-## 七、核心常量和配置
+## 八、核心常量和配置
 
 ### 1. Termux 常量
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/TermuxConstants.java`  
@@ -437,7 +474,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 - 定义默认 Shell 路径
 - 定义命令执行超时时间
 
-## 八、技术架构总结
+## 九、技术架构总结
 
 ### 核心技术栈
 1. **Java 层**: 命令管理、会话管理、服务管理
@@ -477,7 +514,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 5. **标准接口**: 使用标准 POSIX API
 6. **进程隔离**: 每个会话独立运行
 
-## 九、代码文件清单
+## 十、代码文件清单
 
 ### 核心文件（按重要性排序）
 
@@ -515,20 +552,25 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.kt` ✅ ⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.kt` ✅ ⭐⭐
+   - `termux-shared/src/main/java/com/termux/shared/shell/command/result/ResultData.java` ❌ **待重构** ⭐⭐⭐
 
-7. **配置和常量**
+7. **AM Socket Server**
+   - `termux-shared/src/main/java/com/termux/shared/shell/am/AmSocketServer.java` ❌ **待重构** ⭐⭐⭐
+   - `termux-shared/src/main/java/com/termux/shared/termux/shell/am/TermuxAmSocketServer.java` ❌ **待重构** ⭐⭐⭐
+
+8. **配置和常量**
    - ~~`termux-shared/src/main/java/com/termux/shared/termux/TermuxBootstrap.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/TermuxBootstrap.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/termux/TermuxConstants.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/TermuxConstants.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/ShellCommandConstants.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/ShellCommandConstants.kt` ✅ ⭐⭐⭐
 
 ### 重构统计
 
-- **总文件数**: 25 个核心文件
+- **总文件数**: 28 个核心文件
 - **已重构为 Kotlin**: 23 个 ✅
-- **待重构**: 0 个 ❌
+- **待重构**: 3 个 ❌ (ResultData, AmSocketServer, TermuxAmSocketServer)
 - **保持 Java**: 1 个 ❌ (TermuxService.java - 重构后会导致终端文字消失)
 - **Native/汇编代码**: 2 个 (不需要重构)
-- **重构完成度**: 100% (23/23 个 Java 文件) 🎉
+- **重构完成度**: 88.5% (23/26 个 Java 文件)
 
 ---
 
