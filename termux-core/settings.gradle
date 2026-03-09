@@ -1,0 +1,8 @@
+// Termux Core 子模块配置
+include ':bootstrap'
+
+// 未来可以添加更多子模块
+// include ':vim'
+// include ':python'
+// include ':nodejs'
+// include ':git'

@@ -1,1 +1,5 @@
-include ':app', ':termux-core', ':termux-shared', ':terminal-emulator', ':terminal-view'
+include ':app', ':termux-shared', ':terminal-emulator', ':terminal-view'
+
+// Termux Core 主模块及其子模块
+include ':termux-core'
+include ':termux-core:bootstrap'

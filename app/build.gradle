@@ -38,7 +38,7 @@ android {
         implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-        implementation project(":termux-core")
+        implementation project(":termux-core:bootstrap")
         implementation project(":terminal-view")
         implementation project(":termux-shared")
     }
