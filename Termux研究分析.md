@@ -16,113 +16,252 @@ termux-app/
 #### termux-shared（共享工具库）
 **职责**：提供跨模块的通用工具类和常量定义
 
-**主要功能**：
-- **文件操作**：文件读写、权限管理、路径处理（FileUtils）
-- **Android 工具**：包名管理、权限检查、系统信息获取（AndroidUtils、PackageUtils）
-- **日志系统**：统一的日志记录和输出（Logger）
-- **错误处理**：错误码定义、错误信息格式化（Error、Errno）
-- **Shell 管理**：Shell 命令执行、环境变量管理（ShellUtils、TermuxShellEnvironment）
-- **设置管理**：SharedPreferences 封装、配置文件读取（TermuxAppSharedPreferences）
-- **网络工具**：URL 处理、URI 解析、Socket 通信（UriUtils、LocalSocketManager）
-- **Markdown 渲染**：Markdown 文本解析和显示（MarkdownUtils）
-- **通知管理**：通知创建和显示（NotificationUtils、TermuxNotificationUtils）
-- **主题管理**：主题切换、夜间模式（ThemeUtils、NightMode）
-- **常量定义**：包名、路径、权限等常量（TermuxConstants）
-- **数据处理**：数据转换、格式化（DataUtils）
-- **交互工具**：对话框、Toast、分享（MessageDialogUtils、ShareUtils）
+**主要功能包结构**：
+- **activities/**：通用 Activity（ReportActivity、TextIOActivity）
+- **activity/**：Activity 工具类和错误码（ActivityUtils、ActivityErrno）
+- **android/**：Android 系统工具
+  - AndroidUtils：系统信息获取
+  - PackageUtils：包管理
+  - PermissionUtils：权限检查
+  - PhantomProcessUtils：幽灵进程管理
+  - ProcessUtils：进程工具
+  - SELinuxUtils：SELinux 相关
+  - SettingsProviderUtils：系统设置访问
+  - UserUtils：用户信息
+- **crash/**：崩溃处理（CrashHandler）
+- **data/**：数据处理（DataUtils、IntentUtils）
+- **errors/**：错误处理（Error、Errno、FunctionErrno）
+- **file/**：文件操作（FileUtils、FileUtilsErrno、filesystem/、tests/）
+- **interact/**：用户交互（MessageDialogUtils、ShareUtils）
+- **jni/**：JNI 相关模型
+- **logger/**：日志系统（Logger）
+- **markdown/**：Markdown 渲染（MarkdownUtils）
+- **models/**：数据模型（ReportInfo、TextIOInfo）
+- **net/**：网络工具
+  - socket/：Socket 通信
+  - uri/：URI 处理
+  - url/：URL 工具
+- **notification/**：通知管理（NotificationUtils）
+- **reflection/**：反射工具（ReflectionUtils）
+- **settings/**：设置管理
+  - preferences/：SharedPreferences 封装
+  - properties/：配置文件读取
+- **shell/**：Shell 管理
+  - ArgumentTokenizer：参数解析
+  - ShellUtils：Shell 工具
+  - StreamGobbler：流处理
+  - am/：Activity Manager 相关
+  - command/：命令执行
+- **termux/**：Termux 特有功能
+  - TermuxBootstrap：Bootstrap 管理
+  - TermuxConstants：常量定义
+  - TermuxUtils：Termux 工具
+  - crash/：Termux 崩溃处理
+  - data/：Termux 数据处理
+  - extrakeys/：额外按键配置
+  - file/：Termux 文件管理
+  - interact/：Termux 交互
+  - models/：Termux 数据模型
+  - notification/：Termux 通知
+  - plugins/：插件支持
+  - settings/：Termux 设置
+  - shell/：Termux Shell
+  - terminal/：终端相关
+  - theme/：主题管理
+- **theme/**：主题工具（ThemeUtils、NightMode）
+- **view/**：视图工具（ViewUtils、KeyboardUtils）
+
+**Native 代码**：
+- local-socket.cpp：本地 Socket 通信实现
+
+**资源文件**：
+- 布局文件：报告界面、文本输入输出界面、对话框、Markdown 渲染
+- 菜单文件：报告菜单、文本输入输出菜单
+- 原始资源：apt_info_script.sh、bell.ogg（提示音）
+
+**外部依赖**：
+- androidx 库：appcompat、core、material
+- Markwon：Markdown 渲染库
+- Guava：Google 核心库
+- commons-io：Apache 文件操作库
+- termux-am-library：Termux Activity Manager 库
+- lsposed.hiddenapibypass：隐藏 API 访问
+
+**依赖关系**：
+- 依赖 terminal-view 模块
 
 **特点**：
 - 无业务逻辑，纯工具类
 - 被所有其他模块依赖
 - 提供 Termux 特有的工具方法
+- 包含 Native 代码实现本地 Socket 通信
 
 ---
 
 #### terminal-emulator（终端模拟器）
 **职责**：提供终端仿真核心功能，处理终端协议和字符渲染
 
-**主要功能**：
-- **终端会话管理**：创建、管理、销毁终端会话（TerminalSession）
-- **终端协议处理**：解析 VT100/ANSI 转义序列（TerminalEmulator）
-- **字符缓冲区**：管理终端屏幕缓冲区、历史记录（TerminalBuffer）
-- **输入输出处理**：处理键盘输入、鼠标事件、输出流（TerminalOutput）
-- **字符编码**：UTF-8 编码处理、字符宽度计算（WcWidth）
-- **颜色管理**：ANSI 颜色解析、256 色支持（TextStyle）
-- **光标控制**：光标位置、样式、闪烁（TerminalEmulator）
-- **滚动控制**：屏幕滚动、历史记录滚动（TerminalBuffer）
-- **文本选择**：文本选择、复制功能（TerminalSession）
-- **窗口大小调整**：动态调整终端窗口大小（TerminalSession）
-- **进程管理**：与底层 Shell 进程通信（TerminalSession）
+**主要类文件**：
+- **TerminalSession**：终端会话管理，创建、管理、销毁会话
+- **TerminalEmulator**：终端协议处理，解析 VT100/ANSI 转义序列
+- **TerminalBuffer**：字符缓冲区，管理屏幕缓冲区和历史记录
+- **TerminalRow**：终端行数据结构
+- **TerminalOutput**：输入输出处理，处理键盘输入和输出流
+- **TerminalSessionClient**：会话客户端接口
+- **KeyHandler**：键盘事件处理
+- **TextStyle**：文本样式，颜色管理和 ANSI 颜色解析
+- **TerminalColors**：终端颜色定义
+- **TerminalColorScheme**：颜色方案管理
+- **WcWidth**：字符宽度计算，UTF-8 编码处理
+- **ByteQueue**：字节队列，用于数据缓冲
+- **Logger**：日志记录
+- **JNI**：JNI 接口定义
+
+**Native 代码**：
+- termux.c：Native 层实现，与底层 Shell 进程通信
+
+**依赖关系**：
+- 无外部模块依赖，仅依赖 Android 基础库
 
 **特点**：
 - 纯逻辑层，不涉及 UI
 - 实现标准终端协议
 - 与 Native 层（JNI）交互
+- 独立模块，可被其他项目复用
 
 ---
 
 #### terminal-view（终端视图）
 **职责**：提供终端的 UI 展示和用户交互
 
-**主要功能**：
-- **终端渲染**：将终端缓冲区内容渲染到屏幕（TerminalView）
-- **文本绘制**：字符绘制、颜色渲染、字体管理（TerminalRenderer）
-- **触摸处理**：触摸事件处理、手势识别（TerminalView）
-- **滚动处理**：滚动条显示、滚动事件处理（TerminalView）
-- **文本选择 UI**：选择手柄、选择高亮显示（TerminalView）
-- **额外按键**：额外按键栏显示和交互（ExtraKeysView）
-- **自动补全**：命令自动补全 UI（TerminalView）
-- **长按菜单**：长按显示上下文菜单（TerminalView）
-- **缩放支持**：双指缩放字体大小（TerminalView）
-- **性能优化**：脏区域刷新、硬件加速（TerminalRenderer）
-- **可访问性**：屏幕阅读器支持（TerminalView）
+**主要类文件**：
+- **TerminalView**：终端视图主类，负责渲染、触摸处理、滚动、文本选择等
+- **TerminalRenderer**：终端渲染器，字符绘制、颜色渲染、字体管理
+- **TerminalViewClient**：视图客户端接口
+- **GestureAndScaleRecognizer**：手势和缩放识别器
+- **support/**：兼容性支持类
+  - PopupWindowCompatGingerbread：弹出窗口兼容实现
+- **textselection/**：文本选择相关
+  - CursorController：光标控制器接口
+  - TextSelectionCursorController：文本选择光标控制器
+  - TextSelectionHandleView：文本选择手柄视图
+
+**资源文件**：
+- 文本选择手柄图标（左右手柄）
+
+**依赖关系**：
+- 依赖 terminal-emulator 模块（api 依赖）
 
 **特点**：
 - 纯 UI 层，继承自 View
 - 依赖 terminal-emulator 提供的数据
 - 处理所有用户交互
 
-### 主要问题
-1. **紧耦合**：Activity 直接操作 Service，业务逻辑分散在各处
-2. **无架构模式**：没有 ViewModel，数据和 UI 混在一起
-3. **难以测试**：业务逻辑在 Activity/Service 中，无法进行单元测试
-4. **模块职责不清**：app 模块过于臃肿，承担了太多职责
-5. **代码复用困难**：业务逻辑和 UI 绑定，无法在其他地方复用
+---
+
+#### app（主应用模块）
+**职责**：提供 Termux 应用的 UI 界面和业务逻辑整合
+
+**主要组件**：
+- **TermuxActivity**：主界面 Activity，管理终端视图和用户交互
+- **TermuxService**：后台服务，管理终端会话生命周期
+- **RunCommandService**：执行命令服务，处理外部命令执行请求
+- **TermuxApplication**：应用程序入口，初始化全局配置
+- **TermuxInstaller**：Bootstrap 安装器，负责首次安装和更新
+- **TermuxOpenReceiver**：广播接收器，处理应用启动事件
+- **SystemEventReceiver**：系统事件接收器，监听系统广播
+
+**子包结构**：
+- **activities/**：设置界面（SettingsActivity）、帮助界面（HelpActivity）
+- **api/file/**：文件接收功能（FileReceiverActivity）
+- **fragments/settings/**：各种设置 Fragment（Termux、API、Float、Tasker、Widget）
+- **terminal/**：终端相关客户端实现
+  - TermuxTerminalSessionActivityClient：Activity 端会话客户端
+  - TermuxTerminalSessionServiceClient：Service 端会话客户端
+  - TermuxTerminalViewClient：终端视图客户端
+  - TermuxSessionsListViewController：会话列表控制器
+  - TermuxActivityRootView：根视图，处理软键盘
+- **terminal/io/**：输入输出相关
+  - TermuxTerminalExtraKeys：额外按键实现
+  - KeyboardShortcut：键盘快捷键
+  - TerminalToolbarViewPager：工具栏 ViewPager
+  - FullScreenWorkAround：全屏模式修复
+- **models/**：数据模型（UserAction）
+- **filepicker/**：文档提供器（TermuxDocumentsProvider）
+
+**外部依赖**：
+- androidx 库：core、drawerlayout、preference、viewpager
+- Material Design 组件
+- Markwon：Markdown 渲染库
+- Guava：Google 核心库
+
+**依赖关系**：
+- 依赖 termux-core:bootstrap 模块
+- 依赖 terminal-view 模块
+- 依赖 termux-shared 模块
+
+**特点**：
+- 混合了 UI 和业务逻辑
+- 直接依赖所有其他模块
+- 包含 Kotlin 和 Java 混合代码
+- 应用入口，整合所有功能
 
 ---
 
-## 二、目标架构：Clean Architecture + MVVM
+#### termux-core/bootstrap（Bootstrap 模块）
+**职责**：提供 Termux 运行环境的 Bootstrap 文件打包和安装
 
-### 架构分层
+**主要内容**：
+- **Native 代码**：termux-bootstrap.c 和 termux-bootstrap-zip.S
+- **Bootstrap 压缩包**：包含多架构支持
+  - bootstrap-aarch64.zip（ARM64）
+  - bootstrap-arm.zip（ARM32）
+  - bootstrap-i686.zip（x86 32位）
+  - bootstrap-x86_64.zip（x86 64位）
+
+**外部依赖**：
+- androidx 库：core、drawerlayout、material
+- Guava、commons-io
+- termux-am-library
+
+**依赖关系**：
+- 依赖 terminal-emulator 模块
+- 依赖 terminal-view 模块
+- 依赖 termux-shared 模块
+
+**特点**：
+- 纯 Native 实现
+- 包含预编译的 Linux 工具链
+- 支持多种 CPU 架构
+- 负责 Termux 运行环境的初始化
+
+---
+
+### 模块依赖关系图
 
 ```
-┌─────────────────────────────────────────────────────┐
-│              Presentation Layer (表现层)             │
-│        Activities, Fragments, ViewModels            │
-│              负责：UI 展示和用户交互                  │
-└─────────────────────────────────────────────────────┘
-                        ↓ ↑
-┌─────────────────────────────────────────────────────┐
-│               Domain Layer (领域层)                  │
-│          UseCases, Repository 接口, 领域模型         │
-│         负责：纯业务逻辑，不依赖任何框架              │
-└─────────────────────────────────────────────────────┘
-                        ↓ ↑
-┌─────────────────────────────────────────────────────┐
-│                Data Layer (数据层)                   │
-│       Repository 实现, DataSource, Mapper            │
-│        负责：数据访问，与外部系统交互                 │
-└─────────────────────────────────────────────────────┘
-                        ↓ ↑
-┌─────────────────────────────────────────────────────┐
-│               Core Layer (核心层)                    │
-│          Native 功能, 底层实现, 工具类               │
-│         负责：底层功能实现，与系统交互                │
-└─────────────────────────────────────────────────────┘
+app
+├── termux-core:bootstrap
+│   ├── terminal-emulator
+│   ├── terminal-view
+│   │   └── terminal-emulator
+│   └── termux-shared
+│       └── terminal-view
+├── terminal-view
+│   └── terminal-emulator
+└── termux-shared
+    └── terminal-view
 ```
 
-### 依赖规则
-- **单向依赖**：外层依赖内层，内层不知道外层的存在
-- **Domain 层**：纯 Kotlin，不依赖 Android 框架
-- **Data 层**：实现 Domain 层定义的接口
-- **Presentation 层**：只依赖 Domain 层，通过接口与 Data 层交互
+**依赖层级**（从底层到上层）：
+1. terminal-emulator（最底层，无依赖）
+2. terminal-view（依赖 terminal-emulator）
+3. termux-shared（依赖 terminal-view）
+4. termux-core:bootstrap（依赖 terminal-emulator、terminal-view、termux-shared）
+5. app（依赖所有模块）
+
+**关键特点**：
+- terminal-emulator 是最底层的独立模块
+- terminal-view 只依赖 terminal-emulator
+- termux-shared 依赖 terminal-view，提供通用工具
+- app 和 bootstrap 模块依赖所有其他模块
