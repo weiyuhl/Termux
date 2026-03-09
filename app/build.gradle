@@ -38,6 +38,7 @@ android {
         implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+        implementation project(":termux-core")
         implementation project(":terminal-view")
         implementation project(":termux-shared")
     }
@@ -61,12 +62,6 @@ android {
         manifestPlaceholders.TERMUX_STYLING_APP_NAME = "Termux:Styling"
         manifestPlaceholders.TERMUX_TASKER_APP_NAME = "Termux:Tasker"
         manifestPlaceholders.TERMUX_WIDGET_APP_NAME = "Termux:Widget"
-
-        externalNativeBuild {
-            ndkBuild {
-                cFlags "-std=c11", "-Wall", "-Wextra", "-Werror", "-Os", "-fno-stack-protector", "-Wl,--gc-sections"
-            }
-        }
 
         splits {
             abi {
@@ -118,12 +113,6 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-
-    externalNativeBuild {
-        ndkBuild {
-            path "src/main/cpp/Android.mk"
-        }
     }
 
     lint {

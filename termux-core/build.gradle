@@ -1,0 +1,67 @@
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+}
+
+android {
+    namespace "com.termux.core"
+    
+    compileSdkVersion project.properties.compileSdkVersion.toInteger()
+    ndkVersion = System.getenv("JITPACK_NDK_VERSION") ?: project.properties.ndkVersion
+    
+    defaultConfig {
+        minSdkVersion project.properties.minSdkVersion.toInteger()
+        targetSdkVersion project.properties.targetSdkVersion.toInteger()
+        
+        externalNativeBuild {
+            ndkBuild {
+                cFlags "-std=c11", "-Wall", "-Wextra", "-Werror", "-Os", "-fno-stack-protector", "-Wl,--gc-sections"
+            }
+        }
+    }
+    
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/cpp/Android.mk"
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+    // Android 基础库
+    implementation "androidx.annotation:annotation:1.9.0"
+    implementation "androidx.core:core:1.13.1"
+    implementation "androidx.drawerlayout:drawerlayout:1.2.0"
+    implementation "com.google.android.material:material:1.12.0"
+    
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    
+    // 第三方库
+    implementation "com.google.guava:guava:24.1-jre"
+    implementation "commons-io:commons-io:2.5"
+    
+    // Termux AM Library
+    implementation "com.termux:termux-am-library:v2.0.0"
+    
+    // 依赖其他模块
+    implementation project(":terminal-emulator")
+    implementation project(":terminal-view")
+    implementation project(":termux-shared")
+}
