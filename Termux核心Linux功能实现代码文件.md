@@ -384,7 +384,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 
 ### 6. 命令结果数据
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/shell/command/result/ResultData.java`  
-**Kotlin 版本**: ❌ **待重构**
+**Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/shell/command/result/ResultData.kt` ✅
 
 **核心功能**:
 - 存储命令执行结果（stdout, stderr, exitCode）
@@ -395,7 +395,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 
 ### 1. AM Socket Server 基类
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/shell/am/AmSocketServer.java`  
-**Kotlin 版本**: ❌ **待重构**
+**Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/shell/am/AmSocketServer.kt` ✅
 
 **核心功能**:
 - 提供 Unix Domain Socket 服务器
@@ -407,7 +407,7 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 
 ### 2. Termux AM Socket Server
 **原始文件**: `termux-shared/src/main/java/com/termux/shared/termux/shell/am/TermuxAmSocketServer.java`  
-**Kotlin 版本**: ❌ **待重构**
+**Kotlin 版本**: `termux-shared/src/main/java/com/termux/shared/termux/shell/am/TermuxAmSocketServer.kt` ✅
 
 **核心功能**:
 - AmSocketServer 的 Termux 包装器
@@ -552,11 +552,11 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/ShellUtils.kt` ✅ ⭐⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/StreamGobbler.kt` ✅ ⭐⭐
    - ~~`termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/ArgumentTokenizer.kt` ✅ ⭐⭐
-   - `termux-shared/src/main/java/com/termux/shared/shell/command/result/ResultData.java` ❌ **待重构** ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/command/result/ResultData.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/command/result/ResultData.kt` ✅ ⭐⭐⭐
 
 7. **AM Socket Server**
-   - `termux-shared/src/main/java/com/termux/shared/shell/am/AmSocketServer.java` ❌ **待重构** ⭐⭐⭐
-   - `termux-shared/src/main/java/com/termux/shared/termux/shell/am/TermuxAmSocketServer.java` ❌ **待重构** ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/shell/am/AmSocketServer.java`~~ → `termux-shared/src/main/java/com/termux/shared/shell/am/AmSocketServer.kt` ✅ ⭐⭐⭐
+   - ~~`termux-shared/src/main/java/com/termux/shared/termux/shell/am/TermuxAmSocketServer.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/shell/am/TermuxAmSocketServer.kt` ✅ ⭐⭐⭐
 
 8. **配置和常量**
    - ~~`termux-shared/src/main/java/com/termux/shared/termux/TermuxBootstrap.java`~~ → `termux-shared/src/main/java/com/termux/shared/termux/TermuxBootstrap.kt` ✅ ⭐⭐⭐
@@ -566,11 +566,11 @@ public static String[] setupShellCommandArguments(String executable, String[] ar
 ### 重构统计
 
 - **总文件数**: 28 个核心文件
-- **已重构为 Kotlin**: 23 个 ✅
-- **待重构**: 3 个 ❌ (ResultData, AmSocketServer, TermuxAmSocketServer)
+- **已重构为 Kotlin**: 26 个 ✅
+- **待重构**: 0 个 ❌
 - **保持 Java**: 1 个 ❌ (TermuxService.java - 重构后会导致终端文字消失)
 - **Native/汇编代码**: 2 个 (不需要重构)
-- **重构完成度**: 88.5% (23/26 个 Java 文件)
+- **重构完成度**: 100% (26/26 个 Java 文件) 🎉
 
 ---
 
